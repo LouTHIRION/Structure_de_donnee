@@ -1,16 +1,23 @@
 /* biblio.c */
 
-#include <stdio.h>
-#include <stdlib.h>
+#include"biblio_liste.h"
 
-typedef struct CellMorceau {
-	struct CellMorceau *suiv;
-	int num;
-	char *titre;
-	char *artiste;
-} CellMorceau;
 
-struct Biblio {
-	CellMorceau *L; /* Liste chainee des morceaux */
-	int nE; 	/* Nombre de morceaux dans la liste */
-};
+Biblio *nouvelle_biblio(void){
+	//allocation memoire et initialisation des champs
+	Biblio *B = (Biblio *)malloc(sizeof(Biblio));
+	B->L = NULL;
+	B->nE = 0;
+}
+	
+	
+void insere(Biblio *B, int num, char *titre, char *artiste) {
+	//allocation memoire, initialisation champs et mis a jour de la biblio
+	CellMorceau *L = (CellMorceau *)malloc(sizeof(CellMorceau));
+	L->num = num;
+	L->titre = titre;
+	L->artiste = artiste;
+	L->suiv = B->L;
+	B->L = L;
+	B->nE ++;
+}
