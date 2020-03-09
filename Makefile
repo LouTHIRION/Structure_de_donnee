@@ -41,7 +41,7 @@ parser.o : parser.c parser.h
 biblio.o: biblio.c biblio.h parser.h
 	$(CC)  -c biblio.c
 	
-jeu_test.o: jeu_test.c jeu_test.h biblio.h
+jeu_test.o: jeu_test.c jeu_test.h biblio.h biblio_liste.h biblio_tabdyn.h biblio_hachage.h biblio_arbrelex.h
 	$(CC)  -c jeu_test.c
 
 #nettoyage

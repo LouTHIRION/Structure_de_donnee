@@ -1,4 +1,7 @@
+/* biblio.c */
+
 #include "biblio.h"
+
 
 Biblio *charge_n_entrees(const char *nom_fichier, int n) {
 	Biblio *B = nouvelle_biblio();
@@ -22,3 +25,4 @@ Biblio *charge_n_entrees(const char *nom_fichier, int n) {
     }
     return B;
 }
+
