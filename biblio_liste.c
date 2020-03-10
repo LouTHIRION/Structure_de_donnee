@@ -31,9 +31,29 @@ void insere(Biblio *B, int num, char *titre, char *artiste) {
 	B->nE ++;
 }
 
+void insereSansNum(Biblio *B, char *titre, char *artiste) {
+	CellMorceau *L = B->L;
+	int num = 0;
+	while(L != NULL) {
+		if (L->num >= num) {
+			num = L->num + 1;
+		}
+		L = L->suiv;
+	}
+	insere(B, num, titre, artiste);
+}
+
 CellMorceau *rechercheParNum(Biblio *B, int num) {
 	CellMorceau *L = B->L;
 	while(num != L->num && L != NULL) {
+		L = L->suiv;
+	}
+	return L;
+}
+	
+CellMorceau *rechercheParTitre(Biblio *B, char *titre) {
+	CellMorceau *L = B->L;
+	while(strcmp(titre, L->titre)!=0 && L != NULL) {
 		L = L->suiv;
 	}
 	return L;
@@ -80,6 +100,7 @@ void affiche_biblio(Biblio *B) {
 int est_dans(CellMorceau *L, Biblio *B) {
 	if (B->L == NULL) {
 		return 0;
+		printf("salut");
 	}
 	CellMorceau *M = B->L;
 	while((strcmp(M->titre, L->titre)!=0 || strcmp(M->artiste, L->artiste)!=0) && M->suiv != NULL) {
@@ -91,12 +112,21 @@ int est_dans(CellMorceau *L, Biblio *B) {
 	return 0;
 }
 
-Biblio *unique(Biblio *B) {
+
+Biblio *uniques(Biblio *B) {
 	Biblio *new_B = nouvelle_biblio();
 	CellMorceau *L = B->L;
 	for (int i = 0; i < B->nE; i++) {
 		if (est_dans(L, new_B)) {
-			
+			supprimeMorceau(new_B, rechercheParTitre(new_B, L->titre)->num);
+		}
+		else {
+			insereSansNum(new_B, L->titre, L->artiste);
+		}
+		L = L->suiv;
+	}
+	return new_B;
+}
 
 
 
