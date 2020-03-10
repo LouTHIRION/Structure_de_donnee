@@ -123,6 +123,8 @@ Biblio *uniques(Biblio *B) {
 		else {
 			insereSansNum(new_B, L->titre, L->artiste);
 		}
+		affiche_biblio(new_B);
+		printf("\n");
 		L = L->suiv;
 	}
 	return new_B;
