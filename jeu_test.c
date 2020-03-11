@@ -33,9 +33,11 @@ void test_libere(void) {
 void test_recherche(const char *nom_fichier, int n) {
 	Biblio *B = charge_n_entrees(nom_fichier, n);
 	printf("test recherche par titre\n");
-	afficheMorceau(rechercheParTitre(B, "Stuck On A Feeling"));
-	printf("test recherche par num\n");
-	afficheMorceau(rechercheParNum(B, 15));
+	afficheMorceau(rechercheParTitre(B, "Take Me"));
+	/*printf("test recherche par num\n");
+	for(int i = 0; i < 19; i++) {
+		afficheMorceau(rechercheParNum(B, i));
+	}*/
 	libere_biblio(B);
 }
 

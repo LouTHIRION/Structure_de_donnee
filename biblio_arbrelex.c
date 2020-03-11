@@ -26,6 +26,7 @@ Noeud *rechercheOuCreer_artiste(Biblio *B, char *artiste) {
 		cour = (Noeud *)malloc(sizeof(Noeud));
 		cour->car = artiste[i];
 		cour->liste_car = NULL;
+		cour->liste_morceaux = NULL;
 		cour->car_suiv = NULL;
 		B->A = cour;
 		prec = cour;
@@ -39,6 +40,7 @@ Noeud *rechercheOuCreer_artiste(Biblio *B, char *artiste) {
 		cour = (Noeud *)malloc(sizeof(Noeud));
 		cour->car = artiste[i];
 		cour->liste_car = NULL;
+		cour->liste_morceaux = NULL;
 		cour->car_suiv = NULL;
 		prec->liste_car = cour;
 		prec = cour;
@@ -50,6 +52,7 @@ Noeud *rechercheOuCreer_artiste(Biblio *B, char *artiste) {
 		cour = (Noeud *)malloc(sizeof(Noeud));
 		cour->car = artiste[i];
 		cour->liste_car = NULL;
+		cour->liste_morceaux = NULL;
 		cour->car_suiv = NULL;
 		prec->car_suiv = cour;
 		prec = cour;
@@ -142,50 +145,76 @@ Biblio *uniques (Biblio *B)
    
 }
 
+/* Fonction recursive de recherche de morceau par numero */
 CellMorceau *rechercheParNum_noeuds(Noeud *N, int num) {
-	Noeud *cour = N;
-	if(N != NULL) {
+	if(N != NULL) { // si le noeud existe
+		// recherche du morceau dans la liste du noeud
 		if(N->liste_morceaux != NULL) {
 			CellMorceau *L = N->liste_morceaux;
 			while(L != NULL) {
-				if(L->num == num) {
+				if (L->num == num) {
 					return L;
 				}
 				L = L->suiv;
 			}
 		}
+		// appelle recursif de la fonction pour les noeuds suivants
+		Noeud *N_1 = N->liste_car;
+		Noeud *N_2 = N->car_suiv;
+		/* par cette condition,ci-dessous on synchronise les return de tous 
+		   les appelles a la fonction pour qu'a la fin le dernier 
+		   return renvoie le morceau cherche */
+		if(rechercheParNum_noeuds(N_1, num) == NULL) {
+			return rechercheParNum_noeuds(N_2, num);
+		}
+		else {
+			return rechercheParNum_noeuds(N_1, num);
+		}
+	}
+	return NULL; // renvoie NULL si le noeud n'existe pas
+}
 		
-		
-
-
 CellMorceau * rechercheParNum(Biblio *B, int num) {
-	Biblio *biblio_A;
-	Biblio *biblio_B;
-	Noeud *N = B->A;
-	if(N != NULL) {
+	return rechercheParNum_noeuds(B->A, num);
+}
+
+
+/* Fonction recursive de recherche de morceau par titre
+	idem que pour la rechreche par numero */
+CellMorceau *rechercheParTitre_noeuds(Noeud *N, char *titre) {
+	if(N != NULL) { // si le noeud existe
+		// recherche du morceau dans la liste du noeud
 		if(N->liste_morceaux != NULL) {
 			CellMorceau *L = N->liste_morceaux;
 			while(L != NULL) {
-				if(L->num == num) {
+				if (strcmp(L->titre, titre)==0) {
 					return L;
 				}
 				L = L->suiv;
 			}
 		}
-		biblio_A = B;
-		biblio_A->A = B->
-		rechercheParNum(A, num);
+		// appelle recursif de la fonction pour les noeuds suivants
+		Noeud *N_1 = N->liste_car;
+		Noeud *N_2 = N->car_suiv;
+		/* par cette condition,ci-dessous on synchronise les return de tous 
+		   les appelles a la fonction pour qu'a la fin le dernier 
+		   return renvoie le morceau cherche */
+		if(rechercheParTitre_noeuds(N_1, titre) == NULL) {
+			return rechercheParTitre_noeuds(N_2, titre);
+		}
+		else {
+			return rechercheParTitre_noeuds(N_1, titre);
+		}
+	}
+	return NULL; // renvoie NULL si le noeud n'existe pas
+}
+
+CellMorceau *rechercheParTitre(Biblio *B, char * titre) {
+	return rechercheParTitre_noeuds(B->A, titre);
 }
 
 
-CellMorceau *rechercheParTitre(Biblio *B, char * titre)
-{
-	
-}
-
-
-Biblio *extraireMorceauxDe(Biblio *B, char * artiste)
-{
+Biblio *extraireMorceauxDe(Biblio *B, char * artiste) {
 	
 }
 

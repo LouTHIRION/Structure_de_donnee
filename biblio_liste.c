@@ -97,6 +97,10 @@ void affiche_biblio(Biblio *B) {
 	parcour_Morceaux(B->L);
 }
 
+Biblio *extraireMorceauxDe(Biblio *B, char *artiste) {
+	
+}
+
 int est_dans(CellMorceau *L, Biblio *B) {
 	if (B->L == NULL) {
 		return 0;
