@@ -98,7 +98,15 @@ void affiche_biblio(Biblio *B) {
 }
 
 Biblio *extraireMorceauxDe(Biblio *B, char *artiste) {
-	
+	Biblio *new_B = nouvelle_biblio();
+	CellMorceau *L = B->L;
+	while(L != NULL) {
+		if(strcmp(L->artiste, artiste)==0) {
+			insere(new_B, L->num, L->titre, L->artiste);
+		}
+		L = L->suiv;
+	}
+	return new_B;
 }
 
 int est_dans(CellMorceau *L, Biblio *B) {

@@ -14,15 +14,16 @@ int main(int argc, const char *argv[]) {
 	const char *nomfichier = argv[1];
 	int nblignes = atoi(argv[2]);
 	
-	test_nouvelle_biblio();
+	/*test_nouvelle_biblio();
 	test_insere(0, "titre", "artiste");
 	test_charge_entrees(nomfichier, nblignes);
 	test_libere();
-	test_recherche(nomfichier, nblignes);
+	test_recherche(nomfichier, nblignes);*/
 	//test_supprimeMorceau(nomfichier, nblignes);
 	//test_est_dans(nomfichier, nblignes);
 	//test_insereSansNum(nomfichier, nblignes);
 	//test_unique(nomfichier, nblignes);
+	test_extraireMorceauxDe(nomfichier, nblignes);
 	
 	return 0;
 }

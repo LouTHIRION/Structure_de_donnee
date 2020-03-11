@@ -15,5 +15,6 @@ void test_supprimeMorceau(const char *nom_fichier, int n);
 void test_est_dans(const char *nom_fichier, int n);
 void test_insereSansNum(const char *nom_fichier, int n);
 void test_unique(const char *nom_fichier, int n);
+void test_extraireMorceauxDe(const char *nom_fichier, int n);
 
 #endif

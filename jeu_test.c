@@ -78,7 +78,11 @@ void test_unique(const char *nom_fichier, int n) {
 	libere_biblio(B);
 }
 
-
+void test_extraireMorceauxDe(const char *nom_fichier, int n) {
+	Biblio *B = charge_n_entrees(nom_fichier, n);
+	insereSansNum(B, "blabla", "The Knickerbockers");
+	affiche_biblio(extraireMorceauxDe(B, "The Knickerbockers"));
+}
 
 
 	

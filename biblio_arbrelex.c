@@ -215,7 +215,20 @@ CellMorceau *rechercheParTitre(Biblio *B, char * titre) {
 
 
 Biblio *extraireMorceauxDe(Biblio *B, char * artiste) {
-	
+	Noeud *N = B->A;
+	int i = 0;
+	while(N != NULL && artiste[i] != '\0') {
+		if(N->car == artiste[i]) {
+			N = N->car_suiv;
+			i++;
+		}
+		else {
+			N = N->liste_car;
+		}
+	}
+	if(N != NULL) {
+		N
+		
 }
 
 int est_dans(CellMorceau *L, Biblio *B) {
