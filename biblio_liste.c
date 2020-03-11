@@ -85,16 +85,16 @@ void afficheMorceau(CellMorceau *L) {
 	printf("artiste: %s\n", L->artiste);
 }
 
-void affiche_CellMorceaux(CellMorceau *L) {
+void parcour_Morceaux(CellMorceau *L) {
 	if(L != NULL) {
 		afficheMorceau(L);
-		affiche_CellMorceaux(L->suiv);
+		parcour_Morceaux(L->suiv);
 	}
 }
 
 void affiche_biblio(Biblio *B) {
 	printf("nombre de morceaux: %d\n", B->nE);
-	affiche_CellMorceaux(B->L);
+	parcour_Morceaux(B->L);
 }
 
 int est_dans(CellMorceau *L, Biblio *B) {

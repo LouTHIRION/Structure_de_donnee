@@ -6,6 +6,7 @@ Noeud *rechercheOuCreer_artiste(Biblio *B, char *artiste) {
 	int i = 0; //entier pour parcourir la chaine artiste
 	Noeud *cour = B->A; //Noeud courant
 	Noeud *prec = cour; //Noeud precedent
+	// boucle qui parcourt l'arbre pour trouver le noeud de l'artiste
 	while(cour != NULL && artiste[i] != '\0') {
 		prec = cour;
 		if (artiste[i] == cour->car) {
@@ -16,10 +17,25 @@ Noeud *rechercheOuCreer_artiste(Biblio *B, char *artiste) {
 			cour = cour->liste_car;
 		}
 	}
+	// si ce noeud existe on le retourne 
 	if (cour != NULL) {
 		return cour;
 	}
-	if (artiste[i-1] != prec->car) {
+	// sinon on cree le ou les noeud(s), plusieurs cas de figure :
+	if (prec == NULL) { // l'arbre est encore vide
+		cour = (Noeud *)malloc(sizeof(Noeud));
+		cour->car = artiste[i];
+		cour->liste_car = NULL;
+		cour->car_suiv = NULL;
+		B->A = cour;
+		prec = cour;
+		cour = NULL;
+		i++;
+	}
+	/* l'arbre est non vide mais on a aucune lettre de la chaine
+		OU
+	   on a au moins une lettre mais la liste des lettres suivantes est vide */
+	else if (i == 0 || artiste[i-1] != prec->car) { 
 		cour = (Noeud *)malloc(sizeof(Noeud));
 		cour->car = artiste[i];
 		cour->liste_car = NULL;
@@ -27,7 +43,9 @@ Noeud *rechercheOuCreer_artiste(Biblio *B, char *artiste) {
 		prec->liste_car = cour;
 		prec = cour;
 		cour = NULL;
+		i++;
 	}
+	// boucle general qui ajoute des branches de l'arbre qui n'existent pas
 	while(artiste[i] != '\0') {
 		cour = (Noeud *)malloc(sizeof(Noeud));
 		cour->car = artiste[i];
@@ -38,15 +56,105 @@ Noeud *rechercheOuCreer_artiste(Biblio *B, char *artiste) {
 		cour = NULL;
 		i++;
 	}
-	return prec;
+	return prec; //renvoi le nouveau noeud
 }
 
 
 Biblio *nouvelle_biblio(void) {
+	Biblio *B = (Biblio *)malloc(sizeof(Biblio));
+	B->A = NULL;
+	B->nE = 0;
+}
 
+void libere_biblio(Biblio *B)
+{
+    
+}
+
+void insere(Biblio *B, int num, char *titre, char *artiste) {
+	Noeud *N = rechercheOuCreer_artiste(B, artiste);
+	CellMorceau *L = (CellMorceau *)malloc(sizeof(CellMorceau));
+	L->num = num;
+	L->titre = titre;
+	L->artiste = artiste;
+	L->suiv = N->liste_morceaux;
+	N->liste_morceaux = L;
+	B->nE ++;
+}
+
+void afficheMorceau(CellMorceau *L) {
+	printf("n°%d\t", L->num);
+	printf("titre: %s\t", L->titre);
+	printf("artiste: %s\n", L->artiste);
+	
+	//printf("|A| %8d | %-32.32s | %-32.32s |A|\n", cell->num, cell->titre, cell->artiste);
+}
+
+void parcour_Morceaux(CellMorceau *L) {
+	if(L != NULL) {
+		afficheMorceau(L);
+		parcour_Morceaux(L->suiv);
+	}
+}
+
+void parcour_noeuds(Noeud *N, int i) {
+	Noeud *cour = N;
+	while(cour != NULL) {
+		//printf("%d %c\n", i, cour->car);
+		if(cour->car_suiv != NULL) {
+			parcour_noeuds(cour->car_suiv, i+1);
+		}
+		parcour_Morceaux(cour->liste_morceaux);
+		cour = cour->liste_car;
+	}
+}
+
+void affiche_biblio(Biblio *B) {
+	printf("nombre de morceaux: %d\n", B->nE);
+    parcour_noeuds(B->A, 0);
+    /*Noeud *N = B->A;
+	while(N != NULL) {
+		printf("%c %c ", N->car, N->car_suiv->car);
+		N = N->liste_car;
+	}
+	printf(" \n");*/
 }
 
 
-void insere(Biblio *B, int num, char *titre, char *artiste) {
+Biblio *uniques (Biblio *B)
+{
+   
+}
+
+
+CellMorceau * rechercheParNum(Biblio *B, int num)
+{
+	
+}
+
+
+CellMorceau *rechercheParTitre(Biblio *B, char * titre)
+{
+	
+}
+
+
+Biblio *extraireMorceauxDe(Biblio *B, char * artiste)
+{
+	
+}
+
+int est_dans(CellMorceau *L, Biblio *B) {
+
+}
+
+void insereSansNum(Biblio *B, char *titre, char *artiste)
+{
+	
+}
+
+
+int supprimeMorceau(Biblio *B, int num)
+{
 
 }
