@@ -66,9 +66,27 @@ Biblio *nouvelle_biblio(void) {
 	B->nE = 0;
 }
 
-void libere_biblio(Biblio *B)
-{
-    
+void libere_noeuds(Noeud *N) {
+	if (N != NULL) {
+		Noeud *A = N->liste_car;
+		Noeud *B = N->car_suiv;
+		libere_noeuds(A);
+		libere_noeuds(B);
+		// libere morceau
+		CellMorceau *L = N->liste_morceaux;
+		while(N->liste_morceaux != NULL) {
+			L = N->liste_morceaux;
+			N->liste_morceaux = L->suiv;
+			free(L);
+		}
+		free(N);
+	}
+}
+
+void libere_biblio(Biblio *B) {
+    Noeud *N = B->A;
+    libere_noeuds(N);
+    free(B);
 }
 
 void insere(Biblio *B, int num, char *titre, char *artiste) {
@@ -97,13 +115,11 @@ void parcour_Morceaux(CellMorceau *L) {
 	}
 }
 
-void parcour_noeuds(Noeud *N, int i) {
+void parcour_noeuds(Noeud *N) {
 	Noeud *cour = N;
 	while(cour != NULL) {
 		//printf("%d %c\n", i, cour->car);
-		if(cour->car_suiv != NULL) {
-			parcour_noeuds(cour->car_suiv, i+1);
-		}
+		parcour_noeuds(cour->car_suiv);
 		parcour_Morceaux(cour->liste_morceaux);
 		cour = cour->liste_car;
 	}
@@ -111,7 +127,7 @@ void parcour_noeuds(Noeud *N, int i) {
 
 void affiche_biblio(Biblio *B) {
 	printf("nombre de morceaux: %d\n", B->nE);
-    parcour_noeuds(B->A, 0);
+    parcour_noeuds(B->A);
     /*Noeud *N = B->A;
 	while(N != NULL) {
 		printf("%c %c ", N->car, N->car_suiv->car);
@@ -126,10 +142,39 @@ Biblio *uniques (Biblio *B)
    
 }
 
+CellMorceau *rechercheParNum_noeuds(Noeud *N, int num) {
+	Noeud *cour = N;
+	if(N != NULL) {
+		if(N->liste_morceaux != NULL) {
+			CellMorceau *L = N->liste_morceaux;
+			while(L != NULL) {
+				if(L->num == num) {
+					return L;
+				}
+				L = L->suiv;
+			}
+		}
+		
+		
 
-CellMorceau * rechercheParNum(Biblio *B, int num)
-{
-	
+
+CellMorceau * rechercheParNum(Biblio *B, int num) {
+	Biblio *biblio_A;
+	Biblio *biblio_B;
+	Noeud *N = B->A;
+	if(N != NULL) {
+		if(N->liste_morceaux != NULL) {
+			CellMorceau *L = N->liste_morceaux;
+			while(L != NULL) {
+				if(L->num == num) {
+					return L;
+				}
+				L = L->suiv;
+			}
+		}
+		biblio_A = B;
+		biblio_A->A = B->
+		rechercheParNum(A, num);
 }
 
 

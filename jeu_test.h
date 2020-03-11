@@ -4,8 +4,7 @@
 #define jeu_test_h
 
 #include "biblio.h"
-#include "biblio_liste.h"
-#include "biblio_tabdyn.h"
+#include "biblio_arbrelex.h"
 
 void test_nouvelle_biblio(void);
 void test_insere(int num, char *titre, char *artiste);
