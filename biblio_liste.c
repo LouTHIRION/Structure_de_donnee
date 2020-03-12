@@ -112,7 +112,6 @@ Biblio *extraireMorceauxDe(Biblio *B, char *artiste) {
 int est_dans(CellMorceau *L, Biblio *B) {
 	if (B->L == NULL) {
 		return 0;
-		printf("salut");
 	}
 	CellMorceau *M = B->L;
 	while((strcmp(M->titre, L->titre)!=0 || strcmp(M->artiste, L->artiste)!=0) && M->suiv != NULL) {
