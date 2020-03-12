@@ -15,9 +15,9 @@ int main(int argc, const char *argv[]) {
 	int nblignes = atoi(argv[2]);
 	
 	/*test_nouvelle_biblio();
-	test_insere(0, "titre", "artiste");
+	test_insere(0, "titre", "artiste");*/
 	test_charge_entrees(nomfichier, nblignes);
-	test_libere();
+	/*test_libere();
 	test_recherche(nomfichier, nblignes);*/
 	//test_supprimeMorceau(nomfichier, nblignes);
 	//test_est_dans(nomfichier, nblignes);
