@@ -4,7 +4,7 @@
 
 
 void test_nouvelle_biblio(void) {
-	printf("test fonction nouvelle_biblio:\n");
+	printf("\ntest fonction nouvelle_biblio:\n");
 	Biblio *B = nouvelle_biblio();
 	affiche_biblio(B);
 }
@@ -16,7 +16,7 @@ void test_insere(int num, char *titre, char *artiste) {
 }
 
 void test_charge_entrees(const char *nom_fichier, int n) {
-	printf("test fonction charge_n_entrees:\n");
+	printf("\ntest fonction charge_n_entrees:\n");
 	Biblio *B = charge_n_entrees(nom_fichier, n);
 	insere(B, 20, "blabla", "Don Gibson");
 	insere(B, 19, "blabla", "Rihanna");
@@ -35,7 +35,7 @@ void test_libere(void) {
 
 void test_recherche(const char *nom_fichier, int n) {
 	Biblio *B = charge_n_entrees(nom_fichier, n);
-	printf("test recherche par titre\n");
+	printf("\ntest recherche par titre\n");
 	afficheMorceau(rechercheParTitre(B, "Take Me"));
 	printf("test recherche par num\n");
 	for(int i = 0; i < 19; i++) {
@@ -47,7 +47,7 @@ void test_recherche(const char *nom_fichier, int n) {
 
 void test_supprimeMorceau(const char *nom_fichier, int n) {
 	Biblio *B = charge_n_entrees(nom_fichier, n);
-	printf("test supprimeMorceau\n");
+	printf("\test supprimeMorceau\n");
 	printf("%d\n", supprimeMorceau(B, 15));
 	affiche_biblio(B);
 	libere_biblio(B);
@@ -57,10 +57,10 @@ void test_est_dans(const char *nom_fichier, int n) {
 	Biblio *B = charge_n_entrees(nom_fichier, n);
 	//Biblio *B = nouvelle_biblio();
 	CellMorceau *L = (CellMorceau *)malloc(sizeof(CellMorceau));
-	//L->suiv = NULL;
-	L->titre = "Blue Blue Da";
-	L->artiste = "Don Gibson";
-	printf("est dans : %d\n", est_dans(L, B));
+	L->suiv = NULL;
+	L->titre = "Bright";
+	L->artiste = "Echosmith";
+	printf("\nest dans : %d\n", est_dans(L, B));
 	libere_biblio(B);
 }
 	
@@ -69,7 +69,7 @@ void test_insereSansNum(const char *nom_fichier, int n) {
 	Biblio *B = charge_n_entrees(nom_fichier, n);
 	insereSansNum(B, "blabla", "Jean");
 	insereSansNum(B, "salut", "bonjour");
-	printf("test insereSansNum:\n");
+	printf("\ntest insereSansNum:\n");
 	affiche_biblio(B);
 	libere_biblio(B);
 }
@@ -80,7 +80,7 @@ void test_unique(const char *nom_fichier, int n) {
 	insereSansNum(B, "High On Love", "The Knickerbockers");
 	insereSansNum(B, "Blue Blue Day", "Don Gibson");
 	insereSansNum(B, "Stuck On A Feeling", "Prince Royce Featuring Snoop Dogg");
-	printf("test unique: \n");
+	printf("\ntest unique: \n");
 	affiche_biblio(uniques(B));
 	libere_biblio(B);
 }
@@ -92,7 +92,7 @@ void test_extraireMorceauxDe(const char *nom_fichier, int n) {
 	insere(B, 19, "blabla", "Rihanna");
 	insere(B, 21, "nounou", "Don");
 	insere(B, 22, "blabla", "T");
-	printf("test extraireMorceauxDe: \n");
+	printf("\ntest extraireMorceauxDe: \n");
 	affiche_biblio(extraireMorceauxDe(B, "Don Gibson"));
 }
 
