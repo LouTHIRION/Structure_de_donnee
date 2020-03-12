@@ -18,10 +18,10 @@ void test_insere(int num, char *titre, char *artiste) {
 void test_charge_entrees(const char *nom_fichier, int n) {
 	printf("\ntest fonction charge_n_entrees:\n");
 	Biblio *B = charge_n_entrees(nom_fichier, n);
-	insere(B, 20, "blabla", "Don Gibson");
+	/*insere(B, 20, "blabla", "Don Gibson");
 	insere(B, 19, "blabla", "Rihanna");
 	insere(B, 21, "nounou", "Don");
-	insere(B, 22, "blabla", "T");
+	insere(B, 22, "blabla", "T");*/
 	affiche_biblio(B);	
 	libere_biblio(B);
 }
