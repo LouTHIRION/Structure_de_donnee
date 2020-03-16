@@ -4,7 +4,7 @@
 
 unsigned int fonction_cle(const char *artiste) {
 	unsigned int cle = 0;
-	int i;
+	int i = 0;
 	while(artiste[i] != '\0') {
 		cle += artiste[i];
 		i++;
@@ -23,7 +23,7 @@ void insere(Biblio *B, int num, char *titre, char *artiste) {
     L->titre = titre;
     L->artiste = artiste;
     L->cle = cle;
-    int indice = fonction_hachage(cle, 85000);
+    int indice = fonction_hachage(cle, TAILLE_TABLE);
     L->suiv = B->T[indice];
     B->T[indice] = L;
     B->nE += 1;
@@ -66,43 +66,86 @@ void parcour_Morceaux(CellMorceau *L) {
 
 void affiche_biblio(Biblio *B) {
 	printf("nombre de morceaux: %d\n", B->nE);
-	CellMorceau **T = B->T;
-	int i = 0, i_emeElem = 0;
-    while(i_emeElem < B->nE && i < B->m) {
-    	if(T[i] != NULL) {
-    		parcour_Morceaux(T[i]);
-    		i_emeElem += 1;
+	if (B != NULL) {
+		CellMorceau **T = B->T;
+		int i = 0, i_emeElem = 0;
+    	while(i_emeElem < B->nE && i < B->m) {
+    		if(T[i] != NULL) {
+    			parcour_Morceaux(T[i]);
+    			i_emeElem += 1;
+    		}
+    		i += 1;
     	}
-    	i += 1;
     }
 }
 
 
 CellMorceau * rechercheParNum(Biblio *B, int num) {
-
+	CellMorceau **T = B->T;
+	int i = 0;
+	int capacite = B->m;
+    while(i < capacite) {
+    	if(T[i] != NULL && T[i]->num == num) {
+			return T[i];
+    	}
+    	i += 1;
+    }
+    return NULL;
 }
 
 
-CellMorceau *rechercheParTitre(Biblio *B, char * titre)
-{
-
+CellMorceau *rechercheParTitre(Biblio *B, char * titre) {
+	CellMorceau **T = B->T;
+	int i = 0;
+	int capacite = B->m;
+    while(i < capacite) {
+    	if(T[i] != NULL && strcmp(T[i]->titre, titre)==0) {
+			return T[i];
+    	}
+    	i += 1;
+    }
+    return NULL;
 }
 
 
-Biblio *extraireMorceauxDe(Biblio *B, char * artiste)
-{
-
+Biblio *extraireMorceauxDe(Biblio *B, char * artiste) {
+	unsigned int cle = fonction_cle(artiste);
+	int indice = fonction_hachage(cle, TAILLE_TABLE);
+	CellMorceau *L = B->T[indice];
+	if (L != NULL) {
+		Biblio *new_B = nouvelle_biblio();
+		while (L != NULL) {
+			if(L->cle == cle) {
+				insere(new_B, L->num, L->titre, L->artiste);
+			}
+			L = L->suiv;
+		}
+		return new_B;
+	}
+	return NULL;
 }
 
-void insereSansNum(Biblio *B, char *titre, char *artiste)
-{
-
+void insereSansNum(Biblio *B, char *titre, char *artiste) {
+	if (B != NULL) {
+		CellMorceau **T = B->T;
+		int i = 0, i_emeElem = 0, new_num = 0;
+    	while(i_emeElem < B->nE && i < B->m) {
+    		if(T[i] != NULL) {
+    			if(T[i]->num >= new_num) {
+    				new_num = T[i]->num + 1;
+    			}
+    			i_emeElem += 1;
+    		}
+    		i += 1;
+    		//printf("6\n");
+    	}
+    	insere(B, new_num, titre, artiste);
+    }
 }
 
 
-int supprimeMorceau(Biblio *B, int num)
-{
-
+int supprimeMorceau(Biblio *B, int num) {
+	
 }
 
 
@@ -110,7 +153,6 @@ int est_dans(CellMorceau *L, Biblio *B) {
 
 }
 
-Biblio *uniques (Biblio *B)
-{
+Biblio *uniques (Biblio *B) {
     
 }

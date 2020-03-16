@@ -38,10 +38,10 @@ void test_recherche(const char *nom_fichier, int n) {
 	printf("\ntest recherche par titre\n");
 	afficheMorceau(rechercheParTitre(B, "Take Me"));
 	printf("test recherche par num\n");
-	for(int i = 0; i < 19; i++) {
-		printf("%d\n", i);
-		afficheMorceau(rechercheParNum(B, i));
-	}
+	//for(int i = 0; i < 19; i++) {
+		//printf("%d\n", i);
+		afficheMorceau(rechercheParNum(B, 25));
+	//}
 	libere_biblio(B);
 }
 
