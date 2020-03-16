@@ -83,8 +83,7 @@ void affiche_biblio(Biblio *B) {
 CellMorceau * rechercheParNum(Biblio *B, int num) {
 	CellMorceau **T = B->T;
 	int i = 0;
-	int capacite = B->m;
-    while(i < capacite) {
+    while(i < B->m) {
     	if(T[i] != NULL && T[i]->num == num) {
 			return T[i];
     	}
@@ -97,8 +96,7 @@ CellMorceau * rechercheParNum(Biblio *B, int num) {
 CellMorceau *rechercheParTitre(Biblio *B, char * titre) {
 	CellMorceau **T = B->T;
 	int i = 0;
-	int capacite = B->m;
-    while(i < capacite) {
+    while(i < B->m) {
     	if(T[i] != NULL && strcmp(T[i]->titre, titre)==0) {
 			return T[i];
     	}
@@ -145,14 +143,67 @@ void insereSansNum(Biblio *B, char *titre, char *artiste) {
 
 
 int supprimeMorceau(Biblio *B, int num) {
-	
+	CellMorceau **T = B->T;
+	int i = 0;
+    while(i < B->m) {
+    	if(T[i] != NULL) {
+    		CellMorceau *L = T[i];
+    		if(L->num == num) {
+    			T[i] = L->suiv;
+    			B->nE -= 1;
+    			free(L);
+    			return 1;
+    		}
+    		while(L->suiv != NULL) {
+    		 	if(L->suiv->num == num) {
+					CellMorceau *suiv = L->suiv;
+					L->suiv = suiv->suiv;
+					free(suiv);
+					return 1;
+    			}
+    			L = L->suiv;
+    		}
+    	}
+    	i += 1;
+    }
+    return 0;
 }
 
 
 int est_dans(CellMorceau *L, Biblio *B) {
-
+	int h = fonction_hachage(fonction_cle(L->artiste), TAILLE_TABLE);
+	CellMorceau *M = B->T[h];
+	while(M != NULL) {
+		if(strcmp(L->titre, M->titre)==0) {
+			return 1;
+		}
+		M = M->suiv;
+	}
+	return 0;
 }
 
 Biblio *uniques (Biblio *B) {
-    
+	Biblio *new_B = nouvelle_biblio();
+	CellMorceau **T = B->T;
+		int i = 0, i_emeElem = 0, new_num = 0;
+    	while(i_emeElem < B->nE && i < B->m) {
+    		if(T[i] != NULL) {
+    			CellMorceau *L = T[i];
+    			while(L != NULL) {
+    				if(est_dans(L, new_B)) {
+    					supprimeMorceau(new_B, rechercheParTitre(new_B, L->titre)->num);
+    				}
+    				else {
+    					insereSansNum(new_B, L->titre, L->artiste);
+    				}
+    				L = L->suiv;
+    			}
+    			i_emeElem += 1;
+    		}
+    		i += 1;
+    		//printf("6\n");
+    	}
+    	return new_B;
 }
+
+

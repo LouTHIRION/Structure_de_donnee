@@ -62,9 +62,9 @@ CellMorceau *rechercheParTitre(Biblio *B, char *titre) {
 int supprimeMorceau(Biblio *B, int num) {
 	CellMorceau *L = B->L;
 	if (L->num == num) {
-		CellMorceau *oldL = L;
 		B->L = L->suiv;
-		free(oldL);
+		free(L);
+		B->nE -= 1;
 		return 1;
 	}
 	while(L->suiv != NULL && L->suiv->num != num) {
@@ -74,6 +74,7 @@ int supprimeMorceau(Biblio *B, int num) {
 		CellMorceau *oldL = L->suiv;
 		L->suiv = L->suiv->suiv;
 		free(oldL);
+		B->nE -= 1;
 		return 1;
 	}
 	return 0;

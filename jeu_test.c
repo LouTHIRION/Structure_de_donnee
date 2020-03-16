@@ -47,8 +47,9 @@ void test_recherche(const char *nom_fichier, int n) {
 
 void test_supprimeMorceau(const char *nom_fichier, int n) {
 	Biblio *B = charge_n_entrees(nom_fichier, n);
-	printf("\test supprimeMorceau\n");
-	printf("%d\n", supprimeMorceau(B, 15));
+	printf("\ntest supprimeMorceau\n");
+	insereSansNum(B, "High On Love", "The Knickerbockers");
+	printf("%d\n", supprimeMorceau(B, 9));
 	affiche_biblio(B);
 	libere_biblio(B);
 }
