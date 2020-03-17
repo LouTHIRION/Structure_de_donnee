@@ -18,8 +18,8 @@ int main(int argc, const char *argv[]) {
 	//test_insere(0, "titre", "artiste");
 	test_charge_entrees(nomfichier, nblignes);
 	//test_libere();
-	test_recherche(nomfichier, nblignes);
-	test_supprimeMorceau(nomfichier, nblignes);
+	//test_recherche(nomfichier, nblignes);
+	//test_supprimeMorceau(nomfichier, nblignes);
 	//test_est_dans(nomfichier, nblignes);
 	//test_insereSansNum(nomfichier, nblignes);
 	//test_unique(nomfichier, nblignes);

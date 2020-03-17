@@ -58,7 +58,7 @@ void test_est_dans(const char *nom_fichier, int n) {
 	Biblio *B = charge_n_entrees(nom_fichier, n);
 	//Biblio *B = nouvelle_biblio();
 	CellMorceau *L = (CellMorceau *)malloc(sizeof(CellMorceau));
-	L->suiv = NULL;
+	//L->suiv = NULL;
 	L->titre = "Bright";
 	L->artiste = "Echosmith";
 	printf("\nest dans : %d\n", est_dans(L, B));
@@ -78,23 +78,27 @@ void test_insereSansNum(const char *nom_fichier, int n) {
 
 void test_unique(const char *nom_fichier, int n) {
 	Biblio *B = charge_n_entrees(nom_fichier, n);
-	insereSansNum(B, "High On Love", "The Knickerbockers");
-	insereSansNum(B, "Blue Blue Day", "Don Gibson");
-	insereSansNum(B, "Stuck On A Feeling", "Prince Royce Featuring Snoop Dogg");
-	printf("\ntest unique: \n");
-	affiche_biblio(uniques(B));
+	//insereSansNum(B, "High On Love", "The Knickerbockers");
+	//insereSansNum(B, "Blue Blue Day", "Don Gibson");
+	//insereSansNum(B, "Stuck On A Feeling", "Prince Royce Featuring Snoop Dogg");
+	printf("\ntest unique:\n");
+	Biblio *new_B = uniques(B);
+	affiche_biblio(B);
+	affiche_biblio(new_B);
+	printf("test unique\n");
 	libere_biblio(B);
 }
 
 void test_extraireMorceauxDe(const char *nom_fichier, int n) {
 	Biblio *B = charge_n_entrees(nom_fichier, n);
 	//insereSansNum(B, "blabla", "The Knickerbockers");
-	insere(B, 20, "blabla", "Don Gibson");
-	insere(B, 19, "blabla", "Rihanna");
-	insere(B, 21, "nounou", "Don");
-	insere(B, 22, "blabla", "T");
+	insereSansNum(B, "blabla", "Don Gibson");
+	insereSansNum(B, "blabla", "Rihanna");
+	insereSansNum(B, "nounou", "Don");
+	insereSansNum(B, "blabla", "T");
+	affiche_biblio(B);
 	printf("\ntest extraireMorceauxDe: \n");
-	affiche_biblio(extraireMorceauxDe(B, "Don Gibson"));
+	affiche_biblio(extraireMorceauxDe(B, "Styx"));
 }
 
 

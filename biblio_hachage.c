@@ -77,6 +77,7 @@ void affiche_biblio(Biblio *B) {
     		i += 1;
     	}
     }
+    printf("nombre de morceaux: %d\n", B->nE);
 }
 
 

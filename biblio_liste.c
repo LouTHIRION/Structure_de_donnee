@@ -96,6 +96,7 @@ void parcour_Morceaux(CellMorceau *L) {
 void affiche_biblio(Biblio *B) {
 	printf("nombre de morceaux: %d\n", B->nE);
 	parcour_Morceaux(B->L);
+	printf("nombre de morceaux: %d\n", B->nE);
 }
 
 Biblio *extraireMorceauxDe(Biblio *B, char *artiste) {
@@ -135,8 +136,6 @@ Biblio *uniques(Biblio *B) {
 		else {
 			insereSansNum(new_B, L->titre, L->artiste);
 		}
-		affiche_biblio(new_B);
-		printf("\n");
 		L = L->suiv;
 	}
 	return new_B;
