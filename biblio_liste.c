@@ -86,16 +86,21 @@ void afficheMorceau(CellMorceau *L) {
 	printf("artiste: %s\n", L->artiste);
 }
 
-void parcour_Morceaux(CellMorceau *L) {
+/*void parcour_Morceaux(CellMorceau *L) {
 	if(L != NULL) {
 		afficheMorceau(L);
 		parcour_Morceaux(L->suiv);
 	}
-}
+}*/
 
 void affiche_biblio(Biblio *B) {
+	CellMorceau *L = B->L;
 	printf("nombre de morceaux: %d\n", B->nE);
-	parcour_Morceaux(B->L);
+	//parcour_Morceaux(B->L);
+	while(L != NULL) {
+		afficheMorceau(L);
+		L = L->suiv;
+	}
 	printf("nombre de morceaux: %d\n", B->nE);
 }
 

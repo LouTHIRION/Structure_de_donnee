@@ -52,9 +52,11 @@ void libere_biblio(Biblio *B) {
 
 void afficheMorceau(CellMorceau *L) {
 	//printf("§§ %8d § %-32.32s § %-32.32s §§\n", cell->num, cell->titre, cell->artiste);
-	printf("n°%d\t", L->num);
-	printf("titre: %s\t", L->titre);
-	printf("artiste: %s\n", L->artiste);
+	if(L != NULL) {
+		printf("n°%d\t", L->num);
+		printf("titre: %s\t", L->titre);
+		printf("artiste: %s\n", L->artiste);
+	}
 }
 
 void parcour_Morceaux(CellMorceau *L) {
@@ -85,8 +87,14 @@ CellMorceau * rechercheParNum(Biblio *B, int num) {
 	CellMorceau **T = B->T;
 	int i = 0;
     while(i < B->m) {
-    	if(T[i] != NULL && T[i]->num == num) {
-			return T[i];
+    	if(T[i] != NULL) {
+    		CellMorceau *L = T[i];
+    		while(L != NULL) {
+    			if(L->num == num) {
+					return L;
+				}
+				L = L->suiv;
+			}
     	}
     	i += 1;
     }
@@ -98,8 +106,14 @@ CellMorceau *rechercheParTitre(Biblio *B, char * titre) {
 	CellMorceau **T = B->T;
 	int i = 0;
     while(i < B->m) {
-    	if(T[i] != NULL && strcmp(T[i]->titre, titre)==0) {
-			return T[i];
+    	if(T[i] != NULL) {
+    		CellMorceau *L = T[i];
+    		while(L != NULL) {
+    	 		if (strcmp(L->titre, titre)==0) {
+					return L;
+				}
+				L = L->suiv;
+			}
     	}
     	i += 1;
     }
@@ -114,7 +128,7 @@ Biblio *extraireMorceauxDe(Biblio *B, char * artiste) {
 	if (L != NULL) {
 		Biblio *new_B = nouvelle_biblio();
 		while (L != NULL) {
-			if(L->cle == cle) {
+			if(strcmp(L->artiste, artiste)==0) {
 				insere(new_B, L->num, L->titre, L->artiste);
 			}
 			L = L->suiv;
@@ -136,7 +150,6 @@ void insereSansNum(Biblio *B, char *titre, char *artiste) {
     			i_emeElem += 1;
     		}
     		i += 1;
-    		//printf("6\n");
     	}
     	insere(B, new_num, titre, artiste);
     }
@@ -159,6 +172,7 @@ int supprimeMorceau(Biblio *B, int num) {
     		 	if(L->suiv->num == num) {
 					CellMorceau *suiv = L->suiv;
 					L->suiv = suiv->suiv;
+					B->nE -= 1;
 					free(suiv);
 					return 1;
     			}
@@ -195,7 +209,8 @@ Biblio *uniques (Biblio *B) {
     					supprimeMorceau(new_B, rechercheParTitre(new_B, L->titre)->num);
     				}
     				else {
-    					insereSansNum(new_B, L->titre, L->artiste);
+    					//insereSansNum(new_B, L->titre, L->artiste);
+    					insere(new_B, L->num, L->titre, L->artiste);
     				}
     				L = L->suiv;
     			}

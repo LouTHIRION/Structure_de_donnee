@@ -372,8 +372,14 @@ void rechercheUniques_noeuds(Noeud *N, Noeud *new_N, int *nE) {//Biblio *B) {
 		if(N->liste_car != NULL) {
 			new_N->liste_car = (Noeud *)malloc(sizeof(Noeud));
 		}
+		else {
+			new_N->liste_car = NULL;
+		}
 		if(N->car_suiv != NULL) {
 			new_N->car_suiv = (Noeud *)malloc(sizeof(Noeud));
+		}
+		else {
+			new_N->car_suiv = NULL;
 		}
 		new_N->liste_morceaux = NULL;
 		new_N->car = N->car;
@@ -401,9 +407,9 @@ void rechercheUniques_noeuds(Noeud *N, Noeud *new_N, int *nE) {//Biblio *B) {
 					}
 					L = L->suiv;
 				}
-				printf("-\n");
+				/*printf("-\n");
 				parcour_Morceaux(liste_sansDouble->suiv);
-				printf("-\n\n");
+				printf("-\n\n");*/
 				CellMorceau *oldListe = liste_sansDouble;
 				liste_sansDouble = liste_sansDouble->suiv;
 				free(oldListe);
