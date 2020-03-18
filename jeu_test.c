@@ -77,12 +77,24 @@ void test_insereSansNum(const char *nom_fichier, int n) {
 	libere_biblio(B);
 }
 	
+void test_extraireMorceauxDe(const char *nom_fichier, int n) {
+	Biblio *B = charge_n_entrees(nom_fichier, n);
+	//insereSansNum(B, "blabla", "The Knickerbockers");
+	insereSansNum(B, "blabla", "Don Gibson");
+	insereSansNum(B, "blabla", "Rihanna");
+	insereSansNum(B, "nounou", "Don");
+	insereSansNum(B, "blabla", "T");
+	//affiche_biblio(B);
+	printf("\ntest extraireMorceauxDe: \n");
+	affiche_biblio(extraireMorceauxDe(B, "3 Doors Down"));
+}
 
 void test_unique(const char *nom_fichier, int n) {
 	Biblio *B = charge_n_entrees(nom_fichier, n);
-	//insereSansNum(B, "High On Love", "The Knickerbockers");
-	//insereSansNum(B, "Blue Blue Day", "Don Gibson");
-	//insereSansNum(B, "Stuck On A Feeling", "Prince Royce Featuring Snoop Dogg");
+	/*insereSansNum(B, "High On Love", "The Knickerbockers");
+	insereSansNum(B, "Blue Blue Day", "Don Gibson");
+	insereSansNum(B, "Stuck On A Feeling", "Prince Royce Featuring Snoop Dogg");
+	insereSansNum(B, "Blue Blue Day", "Don Gibson");*/
 	printf("\ntest unique:\n");
 	Biblio *new_B = uniques(B);
 	//affiche_biblio(B);
@@ -91,17 +103,6 @@ void test_unique(const char *nom_fichier, int n) {
 	libere_biblio(B);
 }
 
-void test_extraireMorceauxDe(const char *nom_fichier, int n) {
-	Biblio *B = charge_n_entrees(nom_fichier, n);
-	//insereSansNum(B, "blabla", "The Knickerbockers");
-	insereSansNum(B, "blabla", "Don Gibson");
-	insereSansNum(B, "blabla", "Rihanna");
-	insereSansNum(B, "nounou", "Don");
-	insereSansNum(B, "blabla", "T");
-	affiche_biblio(B);
-	printf("\ntest extraireMorceauxDe: \n");
-	affiche_biblio(extraireMorceauxDe(B, "Rihanna"));
-}
 
 
 	

@@ -117,15 +117,12 @@ Biblio *extraireMorceauxDe(Biblio *B, char *artiste) {
 }
 
 int est_dans(CellMorceau *L, Biblio *B) {
-	if (B->L == NULL) {
-		return 0;
-	}
 	CellMorceau *M = B->L;
-	while((strcmp(M->titre, L->titre)!=0 || strcmp(M->artiste, L->artiste)!=0) && M->suiv != NULL) {
+	while(M != NULL) {
+		if(strcmp(M->titre, L->titre)==0 && strcmp(M->artiste, L->artiste)==0 && M->num != L->num) {
+			return 1;
+		}
 		M = M->suiv;
-	}
-	if (strcmp(M->titre, L->titre)==0 && strcmp(M->artiste, L->artiste)==0) {
-		return 1;
 	}
 	return 0;
 }
@@ -135,10 +132,7 @@ Biblio *uniques(Biblio *B) {
 	Biblio *new_B = nouvelle_biblio();
 	CellMorceau *L = B->L;
 	for (int i = 0; i < B->nE; i++) {
-		if (est_dans(L, new_B)) {
-			supprimeMorceau(new_B, rechercheParTitre(new_B, L->titre)->num);
-		}
-		else {
+		if (est_dans(L, B)==0) {
 			insereSansNum(new_B, L->titre, L->artiste);
 		}
 		L = L->suiv;

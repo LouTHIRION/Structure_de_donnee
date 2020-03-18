@@ -317,7 +317,6 @@ void insereSansNum(Biblio *B, char *titre, char *artiste) {
 	int num = 0;
 	num = rechercheNum_noeuds(B->A, num);
 	insere(B, num, titre, artiste);
-	printf("%d\n", num);
 }
 
 
@@ -326,17 +325,34 @@ int est_dans(CellMorceau *L, Biblio *B) {
 	return rechercheParTitre(artiste, L->titre) != NULL;
 }
 
-int est_dansListeMorceaux(CellMorceau *M, CellMorceau *liste_M) {
-	CellMorceau *prec_liste_M = liste_M;
-	liste_M = liste_M->suiv;
+/*int est_dansListeMorceaux(CellMorceau *M, CellMorceau *liste_M) {
+	//CellMorceau *prec_liste_M = liste_M;
+	liste_M = liste_M;//->suiv;
+	//parcour_Morceaux(liste_M);
 	while(liste_M != NULL) {
-		if(strcmp(liste_M->titre, M->titre)==0 && strcmp(liste_M->artiste, M->artiste)==0) {
-			prec_liste_M->suiv = liste_M->suiv;
+		if(strcmp(liste_M->titre, M->titre)==0 && strcmp(liste_M->artiste, M->artiste)==0 && liste_M->num != M->num) {
+			/*prec_liste_M->suiv = liste_M->suiv;
 			free(liste_M);
+			printf("jhfhgisdufh\n");
 			return 1;
 			//return liste_M;
 		}
-		prec_liste_M = liste_M;
+		
+		//prec_liste_M = prec_liste_M->suiv;
+		liste_M = liste_M->suiv;
+		/*if(liste_M == NULL) {
+			printf("sdflnsmdfj\n");
+		}
+		//afficheMorceau(liste_M);
+	}
+	return 0;
+}*/
+
+int est_dansListeMorceaux(CellMorceau *M, CellMorceau *liste_M) {
+	while(liste_M != NULL) {
+		if(strcmp(M->titre, liste_M->titre)==0 && strcmp(M->artiste, liste_M->artiste)==0 && M->num != liste_M->num) {
+			return 1;
+		}
 		liste_M = liste_M->suiv;
 	}
 	return 0;
@@ -346,10 +362,11 @@ void ajouteMorceau(CellMorceau *M, CellMorceau *liste_M) {
 	while(liste_M->suiv != NULL) {
 		liste_M = liste_M->suiv;
 	}
-	liste_M->suiv = (CellMorceau *)malloc(sizeof(CellMorceau));
-	liste_M->suiv->num = M->num;
-	liste_M->suiv->titre = M->titre;
-	liste_M->suiv->artiste = M->artiste;
+	CellMorceau *L = (CellMorceau *)malloc(sizeof(CellMorceau));
+	L->num = M->num;
+	L->titre = M->titre;
+	L->artiste = M->artiste;
+	liste_M->suiv = L;
 }
 
 void supprimeCellMorceau(CellMorceau *M, CellMorceau *liste_M) {
@@ -386,38 +403,68 @@ void rechercheUniques_noeuds(Noeud *N, Noeud *new_N, int *nE) {//Biblio *B) {
 		// compare notre num avec ceux des morceaux
 		if(N->liste_morceaux != NULL) {
 			if(N->liste_morceaux->suiv != NULL) {
-				parcour_Morceaux(N->liste_morceaux);
+				CellMorceau *L = N->liste_morceaux;
+				//CellMorceau *liste_sansDouble = (CellMorceau *)malloc(sizeof(CellMorceau));
+				printf("-\n-\n");
+				while(L != NULL) {
+					afficheMorceau(L);
+					printf("%d\n", est_dansListeMorceaux(L, N->liste_morceaux));
+					if(est_dansListeMorceaux(L, N->liste_morceaux)) {
+						printf("2\n");
+						*nE -=1;
+					}
+					/*else {
+						ajouteMorceau(L, liste_sansDouble);
+					}*/
+					L = L->suiv;
+				}
+			}
+				
+				
+				
+				
+				//parcour_Morceaux(N->liste_morceaux);
+				/*printf("M:\n");
+				afficheMorceau(N->liste_morceaux);
+				printf("suiv\n");
+				
 				CellMorceau *L = N->liste_morceaux;
 				CellMorceau *liste_sansDouble = (CellMorceau *)malloc(sizeof(CellMorceau));
+				CellMorceau *liste_Doublons = (CellMorceau *)malloc(sizeof(CellMorceau));
 				ajouteMorceau(L, liste_sansDouble);
 				L = L->suiv;
+				if(L->suiv != NULL) {
+				afficheMorceau(L->suiv);}
 				//liste_sansDouble = liste_sansDouble->suiv;
 				while(L != NULL) {
+					printf("2\n");
 					/*CellMorceau *M = est_dansListeMorceaux(L, liste_sansDouble)
 					if(M != NULL) {
 						printf("3\n");
 						supprimeCellMorceau(M, liste_sansDouble);
 						*nE -= 1;
-					}*/
-					if(est_dansListeMorceaux(L, liste_sansDouble)) {
+					}*
+					//parcour_Morceaux(liste_sansDouble);
+					if(est_dansListeMorceaux(L, )) {
+						printf("3\n");
 						*nE -= 2;
 					}
 					else {
+						printf("4\n");
 						ajouteMorceau(L, liste_sansDouble);
 					}
+					printf("5\n");
 					L = L->suiv;
 				}
 				/*printf("-\n");
 				parcour_Morceaux(liste_sansDouble->suiv);
-				printf("-\n\n");*/
-				CellMorceau *oldListe = liste_sansDouble;
-				liste_sansDouble = liste_sansDouble->suiv;
-				free(oldListe);
-				new_N->liste_morceaux = liste_sansDouble;
-			}
-			else {
+				printf("-\n\n");*
+				new_N->liste_morceaux = liste_sansDouble->suiv;
+				free(liste_sansDouble);*/
+			//}
+			//else {
 				new_N->liste_morceaux = N->liste_morceaux;
-			}
+			//}
 		}
 		/*if(N->liste_morceaux != NULL) {
 			CellMorceau *L = N->liste_morceaux;

@@ -197,6 +197,16 @@ int est_dans(CellMorceau *L, Biblio *B) {
 	return 0;
 }
 
+int est_dansListeMorceaux(CellMorceau *M, CellMorceau *liste_M) {
+	while(liste_M != NULL) {
+		if(strcmp(M->titre, liste_M->titre)==0 && strcmp(M->artiste, liste_M->artiste)==0 && M->num != liste_M->num) {
+			return 1;
+		}
+		liste_M = liste_M->suiv;
+	}
+	return 0;
+}
+
 Biblio *uniques (Biblio *B) {
 	Biblio *new_B = nouvelle_biblio();
 	CellMorceau **T = B->T;
@@ -204,15 +214,17 @@ Biblio *uniques (Biblio *B) {
     	while(i_emeElem < B->nE && i < B->m) {
     		if(T[i] != NULL) {
     			CellMorceau *L = T[i];
-    			while(L != NULL) {
-    				if(est_dans(L, new_B)) {
-    					supprimeMorceau(new_B, rechercheParTitre(new_B, L->titre)->num);
+    			if(L->suiv != NULL) {
+    				while(L != NULL) {
+    					//printf("%d\n", est_dansListeMorceaux(L, T[i]));
+    					if(est_dansListeMorceaux(L, T[i])==0) {
+    						insere(new_B, L->num, L->titre, L->artiste);
+    					}
+    					L = L->suiv;
     				}
-    				else {
-    					//insereSansNum(new_B, L->titre, L->artiste);
-    					insere(new_B, L->num, L->titre, L->artiste);
-    				}
-    				L = L->suiv;
+    			}
+    			else {
+    				insere(new_B, L->num, L->titre, L->artiste);
     			}
     			i_emeElem += 1;
     		}

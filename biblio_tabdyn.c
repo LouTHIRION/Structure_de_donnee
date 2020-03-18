@@ -143,7 +143,7 @@ int est_dans(CellMorceau *L, Biblio *B) {
 	// parcour chaque element
 	while(i < B->nE) {
 		// si meme titre ET meme artiste
-		if(strcmp(T[i].titre, L->titre)==0 && strcmp(T[i].artiste, L->artiste)==0) {
+		if(T[i].num != L->num && strcmp(T[i].titre, L->titre)==0 && strcmp(T[i].artiste, L->artiste)==0) {
 			return 1;
 		}
 		i++;
@@ -156,10 +156,7 @@ Biblio *uniques (Biblio *B) {
 	CellMorceau *T = B->T;
 	int i = 0;
 	for(i; i<B->nE; i++) {
-		if(est_dans(&T[i], new_B)) {
-			supprimeMorceau(new_B, rechercheParTitre(new_B, T[i].titre)->num);
-		}
-		else {
+		if(est_dans(&T[i], B)==0) {
 			insereSansNum(new_B, T[i].titre, T[i].artiste);
 		}
 	}
