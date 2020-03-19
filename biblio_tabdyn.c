@@ -2,6 +2,8 @@
 
 #include "biblio_tabdyn.h"
 
+/*------------------------------------------------------------------------*/
+
 void insere(Biblio *B, int num, char *titre, char *artiste) {
 	//if(num < B->nE) {  //Pour tester si le num choisi n'est pas out of range
 	// reallocation de la memoire si necessaire
@@ -19,6 +21,8 @@ void insere(Biblio *B, int num, char *titre, char *artiste) {
 	B->nE += 1;
 }
 
+/*------------------------------------------------------------------------*/
+
 Biblio *nouvelle_biblio(void) {
 	// allocation memoire pour la biblio et la tab et initialisation des variables
 	Biblio *B = (Biblio *)malloc(sizeof(Biblio));
@@ -28,15 +32,17 @@ Biblio *nouvelle_biblio(void) {
 	B->T = T;
 }
 
+/*------------------------------------------------------------------------*/
+
 void libere_biblio(Biblio *B) {
 	// libere le tableau puis la biblio
    free(B->T);
    free(B);
 }
 
+/*------------------------------------------------------------------------*/
 
 void afficheMorceau(CellMorceau *L) {
-	//printf("*T* %8d * %-32.32s * %-32.32s *T*\n", cell->num, cell->titre, cell->artiste);
 	if(L != NULL) {
 		printf("n°%d\t", L->num);
 		printf("titre: %s\t", L->titre);
@@ -54,21 +60,13 @@ void affiche_biblio(Biblio *B) {
     printf("capacite du tableau: %d\n", B->capacite);
 }
 
+/*------------------------------------------------------------------------*/
 
 CellMorceau * rechercheParNum(Biblio *B, int num) {
 	return &B->T[num];
-	/*CellMorceau *T = B->T;
-	int i = 0;
-	// parcour chaque element pour trouver le morceau de numero num
-	while(i < B->nE) {
-		if(T[i].num == num) {
-			return &T[i];
-		}
-		i++;
-	}
-	return NULL;*/	
 }
 
+/*------------------------------------------------------------------------*/
 
 CellMorceau *rechercheParTitre(Biblio *B, char * titre) {
 	CellMorceau *T = B->T;
@@ -83,6 +81,7 @@ CellMorceau *rechercheParTitre(Biblio *B, char * titre) {
 	return NULL;
 }
 
+/*------------------------------------------------------------------------*/
 
 Biblio *extraireMorceauxDe(Biblio *B, char * artiste) {
 	Biblio *new_B = nouvelle_biblio();
@@ -98,24 +97,13 @@ Biblio *extraireMorceauxDe(Biblio *B, char * artiste) {
 	return new_B;
 }
 
+/*------------------------------------------------------------------------*/
+
 void insereSansNum(Biblio *B, char *titre, char *artiste) {
 	insere(B, B->nE, titre, artiste);
-	/*CellMorceau *T = B->T;
-	int i = 0;
-	//int num = 0;
-	while(T[i] != NULL) {
-		i++;
-	}
-	insere(B, i, titre, artiste);*/
-	// parcour chaque element a la recherche d'un num libre
-	/*for(i; i<B->nE; i++) {
-		if(T[i].num >= num) {
-			num += 1;
-		}
-	}
-	insere(B, num, titre, artiste);*/
 }
 
+/*------------------------------------------------------------------------*/
 
 int supprimeMorceau(Biblio *B, int num) {
 	//B->T[num] = NULL;
@@ -137,6 +125,8 @@ int supprimeMorceau(Biblio *B, int num) {
 	return 0;
 }
 
+/*------------------------------------------------------------------------*/
+
 int est_dans(CellMorceau *L, Biblio *B) {
 	CellMorceau *T = B->T;
 	int i = 0;
@@ -151,11 +141,15 @@ int est_dans(CellMorceau *L, Biblio *B) {
 	return 0;
 }
 
+/*------------------------------------------------------------------------*/
+
 Biblio *uniques (Biblio *B) {
 	Biblio *new_B = nouvelle_biblio();
 	CellMorceau *T = B->T;
 	int i = 0;
 	for(i; i<B->nE; i++) {
+		/* Pour chaque morceau, si aucun autre morceau n'est similaire dans B,
+		   alors on insere dans new_B */
 		if(est_dans(&T[i], B)==0) {
 			insereSansNum(new_B, T[i].titre, T[i].artiste);
 		}
@@ -163,4 +157,5 @@ Biblio *uniques (Biblio *B) {
 	return new_B;
 }
 
+/*------------------------------------------------------------------------*/
 
