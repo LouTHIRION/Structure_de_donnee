@@ -2,6 +2,7 @@
 
 #include"biblio_liste.h"
 
+/*------------------------------------------------------------------------*/
 
 Biblio *nouvelle_biblio(void){
 	//allocation memoire et initialisation des champs
@@ -10,8 +11,11 @@ Biblio *nouvelle_biblio(void){
 	B->nE = 0;
 }
 
+/*------------------------------------------------------------------------*/
+
 void libere_biblio(Biblio *B) {
 	CellMorceau *L;
+	// libere chaque morceaux
 	while(B->L != NULL) {
 		L = B->L;
 		B->L = L->suiv;
@@ -19,6 +23,8 @@ void libere_biblio(Biblio *B) {
 	}	
 	free(B);
 }
+
+/*------------------------------------------------------------------------*/
 	
 void insere(Biblio *B, int num, char *titre, char *artiste) {
 	//allocation memoire, initialisation champs et mis a jour de la biblio
@@ -30,6 +36,8 @@ void insere(Biblio *B, int num, char *titre, char *artiste) {
 	B->L = L;
 	B->nE ++;
 }
+
+/*------------------------------------------------------------------------*/
 
 void insereSansNum(Biblio *B, char *titre, char *artiste) {
 	CellMorceau *L = B->L;
@@ -43,6 +51,8 @@ void insereSansNum(Biblio *B, char *titre, char *artiste) {
 	insere(B, num, titre, artiste);
 }
 
+/*------------------------------------------------------------------------*/
+
 CellMorceau *rechercheParNum(Biblio *B, int num) {
 	CellMorceau *L = B->L;
 	while(num != L->num && L != NULL) {
@@ -50,6 +60,8 @@ CellMorceau *rechercheParNum(Biblio *B, int num) {
 	}
 	return L;
 }
+
+/*------------------------------------------------------------------------*/
 	
 CellMorceau *rechercheParTitre(Biblio *B, char *titre) {
 	CellMorceau *L = B->L;
@@ -58,6 +70,8 @@ CellMorceau *rechercheParTitre(Biblio *B, char *titre) {
 	}
 	return L;
 }
+
+/*------------------------------------------------------------------------*/
 		
 int supprimeMorceau(Biblio *B, int num) {
 	CellMorceau *L = B->L;
