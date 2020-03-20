@@ -47,7 +47,5 @@ void insereSansNum(Biblio *B, char *titre, char *artiste);
 /* supprime un morceau de B */
 int supprimeMorceau(Biblio *B, int num);
 
-/* test si un morceau est dans la biblio */
-int est_dans(CellMorceau *L, Biblio *B);
 
 #endif

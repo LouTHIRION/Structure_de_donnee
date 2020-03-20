@@ -228,22 +228,6 @@ int supprimeMorceau(Biblio *B, int num) {
 
 /*------------------------------------------------------------------------*/
 
-int est_dans(CellMorceau *L, Biblio *B) {
-	// on se place directement dans la case grace a la cle
-	int h = fonction_hachage(fonction_cle(L->artiste), TAILLE_TABLE);
-	CellMorceau *M = B->T[h];
-	while(M != NULL) {
-		// parcour le liste et cheche un morceau similaire
-		if(strcmp(L->titre, M->titre)==0 && strcmp(M->artiste, L->artiste)==0) {
-			return 1;
-		}
-		M = M->suiv;
-	}
-	return 0;
-}
-
-/*------------------------------------------------------------------------*/
-
 /* Fonction qui dit si un morceau M se trouve ou non dans une liste liste_M */
 int est_dansListeMorceaux(CellMorceau *M, CellMorceau *liste_M) {
 	/* meme mecanisme que fonction est_dans sauf 

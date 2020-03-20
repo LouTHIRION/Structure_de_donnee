@@ -136,6 +136,7 @@ Biblio *extraireMorceauxDe(Biblio *B, char *artiste) {
 
 /*------------------------------------------------------------------------*/
 
+/* Fonction qui dit si un morceau L est dans une bibilo B ou non */
 int est_dans(CellMorceau *L, Biblio *B) {
 	CellMorceau *M = B->L;
 	while(M != NULL) {

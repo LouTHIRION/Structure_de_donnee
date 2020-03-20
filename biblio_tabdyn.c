@@ -127,6 +127,7 @@ int supprimeMorceau(Biblio *B, int num) {
 
 /*------------------------------------------------------------------------*/
 
+/* Fonction qui dit si un morceau L est dans une bibilo B ou non */
 int est_dans(CellMorceau *L, Biblio *B) {
 	CellMorceau *T = B->T;
 	int i = 0;

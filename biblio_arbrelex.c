@@ -338,13 +338,6 @@ void insereSansNum(Biblio *B, char *titre, char *artiste) {
 
 /*------------------------------------------------------------------------*/
 
-int est_dans(CellMorceau *L, Biblio *B) {
-	Biblio *artiste = extraireMorceauxDe(B, L->artiste);
-	return rechercheParTitre(artiste, L->titre) != NULL;
-}
-
-/*------------------------------------------------------------------------*/
-
 /* Fonction qui dit si un morceau M se trouve ou non dans une liste liste_M */
 int est_dansListeMorceaux(CellMorceau *M, CellMorceau *liste_M) {
 	while(liste_M != NULL) {

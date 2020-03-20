@@ -11,11 +11,8 @@
 #include "biblio_hachage.h"
 
 
-
-void test_nouvelle_biblio(void);
-void test_insere(int num, char *titre, char *artiste);
+void test_insere(char *titre, char *artiste);
 void test_charge_entrees(const char *nom_fichier, int n);
-void test_libere(void);
 void test_recherche_parNum(const char *nom_fichier, int n);
 void test_recherche_parTitre(const char *nom_fichier, int n);
 void test_supprimeMorceau(const char *nom_fichier, int n);
